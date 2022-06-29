@@ -1,28 +1,29 @@
 name: Dispatch OpenAPI File Change event
-on:
-  push:
-    branches: 
-      - main
-    paths:
-      - "core/src/main/resources/srs-fleet-manager.json"
+# on:
+  # push:
+  #   branches: 
+  #     - main
+  #   paths:
+  #     - "core/src/main/resources/srs-fleet-manager.json"
+on: pull_request
 
 jobs:
-  dispatch:
-    needs: lint
-    env:
-      APP_SERVICES_CI_TOKEN: ${{ secrets.APP_SERVICES_CI_TOKEN }}
-    strategy:
-      matrix:
-        repo: ["redhat-developer/app-services-sdk-go", "redhat-developer/app-services-sdk-js", "redhat-developer/app-services-sdk-java"]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Repository Dispatch
-        uses: peter-evans/repository-dispatch@v1
-        with:
-          token: ${{ env.APP_SERVICES_CI_TOKEN }}
-          repository: ${{ matrix.repo }}
-          event-type: openapi-spec-change
-          client-payload: '{ "id": "srs-mgmt/v1", "download_url":"https://raw.githubusercontent.com/bf2fc6cc711aee1a0c2a/srs-fleet-manager/main/core/src/main/resources/srs-fleet-manager.json"}'
+  # dispatch:
+  #   needs: lint
+  #   env:
+  #     APP_SERVICES_CI_TOKEN: ${{ secrets.APP_SERVICES_CI_TOKEN }}
+  #   strategy:
+  #     matrix:
+  #       repo: ["redhat-developer/app-services-sdk-go", "redhat-developer/app-services-sdk-js", "redhat-developer/app-services-sdk-java"]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Repository Dispatch
+  #       uses: peter-evans/repository-dispatch@v1
+  #       with:
+  #         token: ${{ env.APP_SERVICES_CI_TOKEN }}
+  #         repository: ${{ matrix.repo }}
+  #         event-type: openapi-spec-change
+  #         client-payload: '{ "id": "srs-mgmt/v1", "download_url":"https://raw.githubusercontent.com/bf2fc6cc711aee1a0c2a/srs-fleet-manager/main/core/src/main/resources/srs-fleet-manager.json"}'
   lint:
     name: Run Spectral
     runs-on: ubuntu-latest
@@ -41,6 +42,7 @@ jobs:
     - uses: actions/checkout@v2
 
     # Run Spectral
-    - uses: stoplightio/spectral-action@0.7.3
+    - name: Spectral Linting
+      uses: stoplightio/spectral-action@v0.8.7
       with:
         file_glob: '/core/src/main/resources/srs-fleet-manager.json'

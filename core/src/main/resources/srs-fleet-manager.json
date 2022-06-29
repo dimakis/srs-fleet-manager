@@ -32,6 +32,12 @@
       "description": "current domain"
     }
   ],
+  "tags": [
+    {
+      "name": "Registries",
+      "description": "Operations about registries"
+    }
+  ],
   "paths": {
     "/api/serviceregistry_mgmt/v1/registries": {
       "summary": "Manage the list of all Registry instances",
@@ -118,8 +124,7 @@
           }
         ],
         "operationId": "getRegistries",
-        "summary": "Get the list of all Registry instances",
-        "description": ""
+        "description": "Get the list of all Registry instances",
       },
       "post": {
         "requestBody": {
@@ -200,13 +205,11 @@
           }
         ],
         "operationId": "createRegistry",
-        "summary": "Create a new Registry instance",
-        "description": ""
+        "description": "Create a new Registry instance",
       }
     },
     "/api/serviceregistry_mgmt/v1/registries/{id}": {
-      "summary": "Manage a specific Registry instance",
-      "description": "",
+      "description": "Manage a specific Registry instance",
       "get": {
         "tags": [
           "Registries"
@@ -404,8 +407,7 @@
         },
         "security": [],
         "operationId": "getError",
-        "summary": "Get information about a specific error type",
-        "description": ""
+        "description": "Get information about a specific error type",
       },
       "parameters": [
         {
